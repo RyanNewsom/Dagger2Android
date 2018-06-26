@@ -7,12 +7,14 @@ import com.bignerdranch.android.nerdmartservice.service.payload.Product
 import com.bignerdranch.android.nerdmartservice.service.payload.User
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class NerdMartServiceManager(var mServiceInterface : NerdMartServiceInterface,
-                             var mDataStore : DataStore
+                             var mDataStore : DataStore,
+                             var mObserveOnScheduler : Scheduler = AndroidSchedulers.mainThread()
 ) {
 
 //    private val mSchedulersTransformer = { observable : Observable<Any> ->
@@ -29,7 +31,7 @@ class NerdMartServiceManager(var mServiceInterface : NerdMartServiceInterface,
                 .doOnNext{ mDataStore.mCachedUser = it }
                 .map { it != User.NO_USER }
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mObserveOnScheduler)
     }
 
     fun getToken() : Observable<UUID> {
@@ -42,7 +44,7 @@ class NerdMartServiceManager(var mServiceInterface : NerdMartServiceInterface,
                 .doOnNext{ mDataStore.mCachedProducts = it }
                 .flatMap{ Observable.fromIterable(it) }
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mObserveOnScheduler)
     }
 
     fun getCart() : Observable<Cart> {
@@ -50,14 +52,14 @@ class NerdMartServiceManager(var mServiceInterface : NerdMartServiceInterface,
                 .flatMap { mServiceInterface.fetchUserCart(it) }
                 .doOnNext{ mDataStore.mCachedCart = it }
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mObserveOnScheduler)
     }
 
     fun postProductToCart(product: Product) : Observable<Boolean> {
         return getToken()
                 .flatMap { mServiceInterface.addProductToCart(it, product) }
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mObserveOnScheduler)
     }
 
     fun signout() : Observable<Boolean> {

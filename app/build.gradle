@@ -27,6 +27,11 @@ android {
     dataBinding {
         enabled = true
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -42,7 +47,11 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     kapt 'com.android.databinding:compiler:3.2.0-alpha03'
     implementation 'androidx.multidex:multidex:2.0.0'
-    kapt 'com.google.dagger:dagger-compiler:2.9'
+    kapt 'com.google.dagger:dagger-compiler:2.14.1'
+    kaptTest 'com.google.dagger:dagger-compiler:2.14.1'
+    testImplementation 'com.squareup.assertj:assertj-android:1.1.0'
+    testImplementation 'org.robolectric:robolectric:3.6.1'
+    testImplementation 'com.android.support:support-annotations:27.0.2'
 
     compileOnly 'javax.annotation:jsr250-api:1.0'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'

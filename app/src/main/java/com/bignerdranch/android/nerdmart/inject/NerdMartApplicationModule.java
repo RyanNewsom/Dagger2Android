@@ -23,30 +23,8 @@ public class NerdMartApplicationModule {
     }
 
     @Provides
-    NerdMartServiceInterface provideNerdMartServiceInterface() {
-        return new NerdMartService();
+    public Context provideContext() {
+        return mApplicationContext;
     }
 
-    @Provides
-    @Singleton
-    NerdMartServiceManager provideNerdMartServiceManager(
-            NerdMartServiceInterface nerdMartServiceInterface, DataStore dataStore
-    ) {
-        return new NerdMartServiceManager(nerdMartServiceInterface, dataStore);
-    }
-
-    @Provides
-    @Singleton
-    DataStore provideDataStore() {
-        return new DataStore();
-    }
-
-    @Provides
-    NerdMartViewModel provideNerdMartViewModel(DataStore dataStore) {
-        return new NerdMartViewModel(
-                mApplicationContext,
-                dataStore.getCachedCart(),
-                dataStore.getCachedUser()
-        );
-    }
 }

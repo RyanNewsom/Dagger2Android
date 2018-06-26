@@ -8,7 +8,7 @@ import dagger.Component;
 
 //Pulls together the modules it wants to use for DI and initializes Dagger
 @Singleton
-@Component(modules = {NerdMartApplicationModule.class})
+@Component(modules = {NerdMartApplicationModule.class, NerdMartCommonModule.class, NerdMartServiceModule.class})
 public interface NerdMartComponent extends NerdMartGraph {
     final class Initializer {
         private Initializer() {
