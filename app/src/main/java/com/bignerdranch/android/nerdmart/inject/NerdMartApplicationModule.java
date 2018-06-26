@@ -2,6 +2,7 @@ package com.bignerdranch.android.nerdmart.inject;
 
 import android.content.Context;
 
+import com.bignerdranch.android.nerdmart.model.DataStore;
 import com.bignerdranch.android.nerdmart.model.service.NerdMartServiceManager;
 import com.bignerdranch.android.nerdmartservice.service.NerdMartService;
 import com.bignerdranch.android.nerdmartservice.service.NerdMartServiceInterface;
@@ -27,7 +28,15 @@ public class NerdMartApplicationModule {
 
     @Provides
     @Singleton
-    NerdMartServiceManager provideNerdMartServiceManager(NerdMartServiceInterface nerdMartServiceInterface) {
-        return new NerdMartServiceManager(nerdMartServiceInterface);
+    NerdMartServiceManager provideNerdMartServiceManager(
+            NerdMartServiceInterface nerdMartServiceInterface, DataStore dataStore
+    ) {
+        return new NerdMartServiceManager(nerdMartServiceInterface, dataStore);
+    }
+
+    @Provides
+    @Singleton
+    DataStore provideDataStore() {
+        return new DataStore();
     }
 }
