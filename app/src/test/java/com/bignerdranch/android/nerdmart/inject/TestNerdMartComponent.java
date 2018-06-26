@@ -20,12 +20,12 @@ public interface TestNerdMartComponent extends TestNerdMartGraph {
         private Initializer() {
             throw new AssertionError("No instances");
         }
-    }
 
-    public static NerdMartGraph init(NerdMartApplication app) {
-        return DaggerTestNerdMartComponent.builder()
-                .nerdMartApplicationModule(new NerdMartApplicationModule(app))
-                .nerdMartServiceModule(new TestNerdMartServiceModule())
-                .build();
+        public static NerdMartGraph init(NerdMartApplication app) {
+            return DaggerTestNerdMartComponent.builder()
+                    .nerdMartApplicationModule(new NerdMartApplicationModule(app))
+                    .nerdMartServiceModule(new TestNerdMartServiceModule())
+                    .build();
+        }
     }
 }

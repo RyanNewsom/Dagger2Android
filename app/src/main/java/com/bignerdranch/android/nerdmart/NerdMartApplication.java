@@ -9,7 +9,7 @@ import com.bignerdranch.android.nerdmart.inject.NerdMartGraph;
 import timber.log.Timber;
 
 public class NerdMartApplication extends Application {
-    private NerdMartGraph mComponent;
+    protected NerdMartGraph mComponent;
 
     @Override
     public void onCreate() {
@@ -18,7 +18,7 @@ public class NerdMartApplication extends Application {
         setupDagger();
     }
 
-    private void setupDagger() {
+    protected void setupDagger() {
         mComponent = NerdMartComponent.Initializer.init(this);
     }
 
