@@ -1,11 +1,13 @@
 package com.bignerdranch.android.nerdmart
 
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.bignerdranch.android.nerdmart.databinding.FragmentLoginBinding
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
@@ -17,9 +19,11 @@ class LoginFragment : NerdMartAbstractFragment() {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         super.onCreateView(inflater, container, savedInstanceState)
 
-        view.fragment_login_login_button.setOnClickListener {
-            val username = fragment_login_username.text.toString()
-            val password = fragment_login_password.text.toString()
+        val fragmentLoginBinding = DataBindingUtil.inflate<FragmentLoginBinding>(inflater, R.layout.fragment_login, container, false)
+
+        fragmentLoginBinding.setLoginButtonClickListener {
+            val username = fragmentLoginBinding.fragmentLoginUsername.text.toString()
+            val password = fragmentLoginBinding.fragmentLoginPassword.text.toString()
 
             addDisposable(mNerdMartServiceManager
                     .authenticate(username, password)
@@ -39,6 +43,6 @@ class LoginFragment : NerdMartAbstractFragment() {
         }
 
 
-        return view
+        return fragmentLoginBinding.root
     }
 }
