@@ -8,13 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bignerdranch.android.nerdmart.inject.Injector;
+import com.bignerdranch.android.nerdmart.model.service.NerdMartServiceManager;
 import com.bignerdranch.android.nerdmartservice.service.NerdMartServiceInterface;
 
 import javax.inject.Inject;
 
 public abstract class NerdMartAbstractFragment extends Fragment {
     @Inject
-    NerdMartServiceInterface mNerdMartServiceInterface;
+    NerdMartServiceManager mNerdMartServiceManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

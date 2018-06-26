@@ -2,8 +2,11 @@ package com.bignerdranch.android.nerdmart.inject;
 
 import android.content.Context;
 
+import com.bignerdranch.android.nerdmart.model.service.NerdMartServiceManager;
 import com.bignerdranch.android.nerdmartservice.service.NerdMartService;
 import com.bignerdranch.android.nerdmartservice.service.NerdMartServiceInterface;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,5 +23,11 @@ public class NerdMartApplicationModule {
     @Provides
     NerdMartServiceInterface provideNerdMartServiceInterface() {
         return new NerdMartService();
+    }
+
+    @Provides
+    @Singleton
+    NerdMartServiceManager provideNerdMartServiceManager(NerdMartServiceInterface nerdMartServiceInterface) {
+        return new NerdMartServiceManager(nerdMartServiceInterface);
     }
 }
