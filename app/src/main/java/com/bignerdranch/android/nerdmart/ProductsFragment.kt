@@ -10,6 +10,11 @@ import com.bignerdranch.android.nerdmart.databinding.FragmentProductsBinding
 import com.bignerdranch.android.nerdmartservice.service.payload.Product
 
 import timber.log.Timber
+import io.reactivex.schedulers.Schedulers
+import android.widget.Toast
+import io.reactivex.disposables.Disposable
+
+
 
 class ProductsFragment : NerdMartAbstractFragment(), AddProductClickEvent {
     lateinit var mFragmentProductsBinding: FragmentProductsBinding
@@ -52,5 +57,25 @@ class ProductsFragment : NerdMartAbstractFragment(), AddProductClickEvent {
 
     override fun onProductAddClick(product: Product) {
         Timber.i("product clicked: " + product.title)
+        val cartSuccessObservable = mNerdMartServiceManager
+                .postProductToCart(product)
+                .compose(loadingTransformer())
+                .cache()
+        val cartUpdateNotificationObservable = cartSuccessObservable
+                .subscribe { aBoolean ->
+                    val message = if (aBoolean)
+                        R.string.product_add_success_message
+                    else
+                        R.string.product_add_failure_message
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                }
+        addDisposable(cartUpdateNotificationObservable)
+        addDisposable(cartSuccessObservable.filter { aBoolean -> aBoolean }
+                .subscribeOn(Schedulers.newThread())
+                .flatMap { aBoolean -> mNerdMartServiceManager.getCart() }
+                .subscribe { cart ->
+                    (activity as NerdMartAbstractActivity).updateCartStatus(cart)
+                    updateUi()
+                })
     }
 }

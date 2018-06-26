@@ -10,6 +10,7 @@ import com.bignerdranch.android.nerdmart.databinding.ActivityNerdmartAbstractBin
 import com.bignerdranch.android.nerdmart.inject.Injector;
 import com.bignerdranch.android.nerdmart.model.service.NerdMartServiceManager;
 import com.bignerdranch.android.nerdmart.viewmodel.NerdMartViewModel;
+import com.bignerdranch.android.nerdmartservice.service.payload.Cart;
 
 
 import javax.inject.Inject;
@@ -51,6 +52,10 @@ public abstract class NerdMartAbstractActivity extends AppCompatActivity {
     }
 
     protected abstract Fragment getFragment();
+
+    public void updateCartStatus(Cart cart) {
+        mNerdMartViewModel.updateCartStatus(cart);
+    }
 
     private void signout() {
         addDisposable(mNerdMartServiceManager
