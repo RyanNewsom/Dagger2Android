@@ -10,7 +10,6 @@ import com.bignerdranch.android.nerdmart.databinding.FragmentProductsBinding
 import com.bignerdranch.android.nerdmartservice.service.payload.Product
 
 import timber.log.Timber
-import java.util.*
 
 class ProductsFragment : NerdMartAbstractFragment(), AddProductClickEvent {
     lateinit var mFragmentProductsBinding: FragmentProductsBinding
@@ -21,7 +20,7 @@ class ProductsFragment : NerdMartAbstractFragment(), AddProductClickEvent {
         super.onCreateView(inflater, container, savedInstanceState)
         mFragmentProductsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_products, container, false)
         mAdapter = ProductRecyclerViewAdapter(listOf(), context!!, this)
-        setupAdapter();
+        setupAdapter()
         updateUi()
 
 

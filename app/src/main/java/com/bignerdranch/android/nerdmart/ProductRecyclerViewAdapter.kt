@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bignerdranch.android.nerdmart.databinding.ViewProductRowBinding
+import com.bignerdranch.android.nerdmart.viewmodel.ProductViewModel
 import com.bignerdranch.android.nerdmartservice.service.payload.Product
 
 open class ProductRecyclerViewAdapter(var mProducts : List<Product>?,
@@ -16,7 +17,7 @@ open class ProductRecyclerViewAdapter(var mProducts : List<Product>?,
         val layoutInflater = LayoutInflater.from(context)
         val viewProductRowBinding = DataBindingUtil.inflate<ViewProductRowBinding>(layoutInflater, R.layout.view_product_row, parent, false)
 
-        return ProductViewHolder(viewProductRowBinding, addProductClickEvent)
+        return ProductViewHolder(viewProductRowBinding, addProductClickEvent, context)
     }
 
     override fun getItemCount(): Int {
@@ -29,10 +30,11 @@ open class ProductRecyclerViewAdapter(var mProducts : List<Product>?,
     }
 
     class ProductViewHolder(private val mDataBinding: ViewProductRowBinding,
-                            private val addProductClickEvent: AddProductClickEvent) : RecyclerView.ViewHolder(mDataBinding.root) {
+                            private val addProductClickEvent: AddProductClickEvent,
+                            private val context: Context) : RecyclerView.ViewHolder(mDataBinding.root) {
 
         fun bindHolder(product: Product?, position : Int) {
-            mDataBinding.viewProductRowTitle.text = product?.title
+            mDataBinding.productViewModel = ProductViewModel(context, product!!, position)
             mDataBinding.setBuyButtonClickListener {
                 if (product != null) {
                     addProductClickEvent.onProductAddClick(product)
