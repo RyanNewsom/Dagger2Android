@@ -5,21 +5,18 @@ import com.bignerdranch.android.nerdmart.TestNerdMartApplication
 import com.bignerdranch.android.nerdmart.inject.TestInjector
 import com.bignerdranch.android.nerdmart.model.DataStore
 import com.bignerdranch.android.nerdmartservice.model.NerdMartDataSourceInterface
+import com.bignerdranch.android.nerdmartservice.service.payload.Cart
+import com.bignerdranch.android.nerdmartservice.service.payload.Product
 import com.bignerdranch.android.nerdmartservice.service.payload.User
+import io.reactivex.observers.TestObserver
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
-
-import org.junit.Assert.*
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import javax.inject.Inject
-import org.junit.Test
-import org.assertj.core.api.Assertions.assertThat
-import io.reactivex.observers.TestObserver
-import com.bignerdranch.android.nerdmartservice.service.payload.User.NO_USER
-import com.bignerdranch.android.nerdmartservice.service.payload.Product
-import com.bignerdranch.android.nerdmartservice.service.payload.Cart
 
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class, sdk = intArrayOf(23))
