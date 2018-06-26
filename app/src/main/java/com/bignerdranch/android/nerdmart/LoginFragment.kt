@@ -15,13 +15,15 @@ class LoginFragment : NerdMartAbstractFragment() {
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_login, container, false)
+        super.onCreateView(inflater, container, savedInstanceState)
 
         view.fragment_login_login_button.setOnClickListener {
             val username = fragment_login_username.text.toString()
             val password = fragment_login_password.text.toString()
 
-            mNerdMartServiceManager
+            addDisposable(mNerdMartServiceManager
                     .authenticate(username, password)
+                    .compose(loadingTransformer())
                     .subscribe({ authenticated ->
                         Toast.makeText(context, R.string.auth_success_toast, Toast.LENGTH_SHORT).show()
 
@@ -33,7 +35,9 @@ class LoginFragment : NerdMartAbstractFragment() {
                         startActivity(intent)
                         activity?.finish()
                     })
+            )
         }
+
 
         return view
     }

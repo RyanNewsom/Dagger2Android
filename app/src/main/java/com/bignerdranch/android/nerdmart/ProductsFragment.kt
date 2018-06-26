@@ -17,12 +17,14 @@ class ProductsFragment : NerdMartAbstractFragment() {
     }
 
     fun updateUi() {
-        mNerdMartServiceManager
+        addDisposable(mNerdMartServiceManager
                 .getProducts()
+                .compose(loadingTransformer())
                 .toList()
                 .subscribe(
                         { products -> Timber.i("recieved products: " + products) },
                         { error -> Timber.i("recieved error: " + error) }
                 )
+        )
     }
 }
