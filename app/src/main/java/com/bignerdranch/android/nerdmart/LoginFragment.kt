@@ -15,8 +15,6 @@ class LoginFragment : NerdMartAbstractFragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
         super.onCreateView(inflater, container, savedInstanceState)
 
         val fragmentLoginBinding = DataBindingUtil.inflate<FragmentLoginBinding>(inflater, R.layout.fragment_login, container, false)

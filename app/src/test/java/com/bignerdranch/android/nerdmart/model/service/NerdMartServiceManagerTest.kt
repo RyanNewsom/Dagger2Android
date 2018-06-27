@@ -28,7 +28,6 @@ open class NerdMartServiceManagerTest {
     @Inject
     lateinit var mNerdMartDataSourceInterface: NerdMartDataSourceInterface
 
-
     @Before
     fun setUp() {
         val application = RuntimeEnvironment.application as TestNerdMartApplication
